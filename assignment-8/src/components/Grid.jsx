@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GridRow from './GridRow';
-import { v4 as uuidv4 } from 'uuid'; //uuidv4 is the key to track the grid
+import { v4 as uuidv4 } from 'uuid';
 
 class Grid extends Component {
   constructor(props) {
@@ -8,19 +8,27 @@ class Grid extends Component {
     this.state = {
       color: this.props.color,
       rows: 0,
-      columns: 1,
+      columns: 0,
     };
   }
 
   componentDidUpdate() {
     if(this.props.color !== this.state.color)
     {
-      this.setState({color: this.props.color}); // it will reset the color if I change to different color.
+      this.setState({color: this.props.color});
     }
   }
 
   addRow = () => {
-    this.setState({ rows: this.state.rows + 1 });
+      if (this.state.rows === 0)
+      {
+        this.setState({ rows: this.state.rows + 1 });
+        this.setState({columns: this.state.columns + 1});
+      }
+      else
+      {
+        this.setState({ rows: this.state.rows + 1 });
+      }
   };
 
   addColumn = () => {
@@ -28,15 +36,31 @@ class Grid extends Component {
   };
 
   removeRow = () => {
-    this.setState({ rows: this.state.rows - 1 });
+      if (this.state.rows <= 0)
+      {
+          this.setState({columns: 0});
+          alert("The grid have no rows");
+      }
+      else
+      {
+        this.setState({ rows: this.state.rows - 1 });
+      }
   };
 
   removeColumn = () => {
-    this.setState({ columns: this.state.columns - 1 });
+      if (this.state.columns <= 0)
+      {
+          this.setState({rows: 0});
+          alert("The grid have no columns");
+      }
+      else
+      {
+        this.setState({ columns: this.state.columns - 1 });
+      }
   };
 
   render() {
-    let grid = []; 
+    let grid = [];
 
     if (!grid) {
       return <p></p>;

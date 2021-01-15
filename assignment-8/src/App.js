@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({color: event.target.value});
+    this.setState({color: event.target.value});// able to change color.
   } 
   // Select a color from dropdown menu of colors
   render() {
